@@ -10,6 +10,10 @@ public interface Field {
 
     FieldType getType();
 
+    FieldCardinality getCardinality();
+
+    boolean isRequired();
+
     boolean isOptional();
 
     boolean isRepeated();

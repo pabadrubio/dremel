@@ -5,12 +5,14 @@ package org.pabad.dremel.storage;
 
 import org.pabad.dremel.parsing.data.internal.AtomicField;
 
+import java.util.List;
+
 public interface ColumnScanner<ValueType> {
 
     boolean hasNext();
 
-    ValueType next();
+    AtomicField<ValueType> next();
 
-    AtomicField<ValueType>[] readAll();
+    List<AtomicField<ValueType>> readAll();
 
 }

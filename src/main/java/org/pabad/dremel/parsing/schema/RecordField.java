@@ -5,8 +5,8 @@ package org.pabad.dremel.parsing.schema;
 
 public class RecordField extends BaseField {
 
-    public RecordField(boolean optional, boolean repeated, String name, Field[] subFields) {
-        super(optional, repeated, name);
+    public RecordField(FieldCardinality cardinality, String name, Field[] subFields) {
+        super(cardinality, name);
         this.subFields = subFields;
     }
 

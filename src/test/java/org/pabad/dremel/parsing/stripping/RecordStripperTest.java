@@ -12,6 +12,9 @@ import org.pabad.dremel.parsing.stubs.InMemoryColumnarStore;
 import org.pabad.dremel.storage.ColumnKey;
 import org.pabad.dremel.storage.ColumnScanner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertTrue;
 
 public class RecordStripperTest {
@@ -24,20 +27,18 @@ public class RecordStripperTest {
 
         InMemoryColumnarStore store = new InMemoryColumnarStore();
         RecordStripper stripper = new RecordStripper();
-        stripper.stripRecords(paperSchema, paperDataDecoder, store);
+        paperDataDecoder.reset();
+        stripper.stripRecords(paperSchema, paperDataDecoder, store, store);
 
         // Check the Name.Language.Country column
-        ColumnKey countryColumn = new ColumnKey("Name", "Language", "Country");
-        ColumnScanner countryColumnScaner = store.getStringColumnScanner(countryColumn);
-        AtomicField<String>[] fields = countryColumnScaner.readAll();
-        AtomicField<String>[] expectedFields = new AtomicField[]{
-                new AtomicField<String>("us", 0, 3),
-                new AtomicField<String>(null, 2, 2),
-                new AtomicField<String>(null, 1, 1),
-                new AtomicField<String>("gb", 1, 3),
-                new AtomicField<String>(null, 0, 1)
-        };
+        ColumnKey countryColumn = new ColumnKey("Document","Name", "Language", "Country");
+        ColumnScanner<String> countryColumnScaner = store.getStringColumnScanner(countryColumn);
+        List<AtomicField<String>> fields = countryColumnScaner.readAll();
+        List<AtomicField<String>> expectedFields = new ArrayList<>();
+        expectedFields.add(new AtomicField<String>("us", 0, 3));
+        expectedFields.add(new AtomicField<String>(null, 2, 2));
+        expectedFields.add(new AtomicField<String>(null, 1, 1));
+        expectedFields.add(new AtomicField<String>("gb", 1, 3));
         assertTrue(expectedFields.equals(fields));
     }
-
 }

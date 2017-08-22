@@ -8,6 +8,7 @@ import org.pabad.dremel.storage.ColumnScanner;
 import org.pabad.dremel.storage.ColumnWriter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,19 +19,22 @@ public class InMemoryColumn<ValueType> implements ColumnScanner<ValueType>, Colu
         return iterator.hasNext();
     }
 
-    public ValueType next() {
+    public AtomicField<ValueType> next() {
         setIterator();
         return iterator.next();
     }
 
-    public AtomicField<ValueType>[] readAll() {
-        return null;
+    public List<AtomicField<ValueType>> readAll() {
+        return rows;
     }
 
     public void write(ValueType value, int repetitionLevel, int definitionLevel) {
-        rows.add(value);
-        repetitionLevels.add(repetitionLevel);
-        definitionLevels.add(definitionLevel);
+        rows.add(new AtomicField<ValueType>(value, repetitionLevel, definitionLevel));
+    }
+
+    @Override
+    public String toString() {
+        return rows.toString();
     }
 
     private void setIterator() {
@@ -38,8 +42,6 @@ public class InMemoryColumn<ValueType> implements ColumnScanner<ValueType>, Colu
             iterator = rows.iterator();
     }
 
-    private List<ValueType> rows = new ArrayList<ValueType>();
-    private List<Integer> definitionLevels = new ArrayList<Integer>();
-    private List<Integer> repetitionLevels = new ArrayList<Integer>();
-    private Iterator<ValueType> iterator;
+    private List<AtomicField<ValueType>> rows = new ArrayList<>();
+    private Iterator<AtomicField<ValueType>> iterator;
 }

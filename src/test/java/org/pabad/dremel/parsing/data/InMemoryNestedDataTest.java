@@ -28,7 +28,7 @@ public class InMemoryNestedDataTest {
                 "    Code: en\n" +
                 "  Url: http://A\n" +
                 "Name\n" +
-                "  Url: http://A\n" +
+                "  Url: http://B\n" +
                 "Name\n" +
                 "  Language\n" +
                 "    Code: en-gb\n" +

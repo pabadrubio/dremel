@@ -8,25 +8,31 @@ package org.pabad.dremel.parsing.schema;
  */
 public abstract class BaseField implements Field {
 
-    public BaseField(boolean optional, boolean repeated, String name) {
-        this.optional = optional;
-        this.repeated = repeated;
+    public BaseField(FieldCardinality cardinality, String name) {
+        this.cardinality = cardinality;
         this.name = name;
     }
 
+    public FieldCardinality getCardinality() {
+        return cardinality;
+    }
+
+    public boolean isRequired() {
+        return cardinality == FieldCardinality.REQUIRED || cardinality == FieldCardinality.MESSAGE_ROOT;
+    }
+
     public boolean isOptional() {
-        return false;
+        return cardinality == FieldCardinality.OPTIONAL;
     }
 
     public boolean isRepeated() {
-        return false;
+        return cardinality == FieldCardinality.REPEATED;
     }
 
     public String getName() {
-        return null;
+        return name;
     }
 
-    private boolean optional;
-    private boolean repeated;
+    private FieldCardinality cardinality;
     private String name;
 }

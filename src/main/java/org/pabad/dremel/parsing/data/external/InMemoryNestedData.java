@@ -46,7 +46,8 @@ public class InMemoryNestedData implements RecordDecoder {
     }
 
     private void buildString(String tabulator, String newLine, String tabulatorLevel, StringBuilder builder) {
-        reset();
+        int lastIndex = index;
+        index = 0;
         while(hasNextField()) {
             Field field = getNextField();
             builder.append(tabulatorLevel);
@@ -63,6 +64,7 @@ public class InMemoryNestedData implements RecordDecoder {
                 builder.append(newLine);
             }
         }
+        index = lastIndex;
     }
 
     private static class FieldData {

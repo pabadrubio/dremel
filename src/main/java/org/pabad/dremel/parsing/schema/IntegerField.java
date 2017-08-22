@@ -5,11 +5,11 @@ package org.pabad.dremel.parsing.schema;
 
 public class IntegerField extends BaseField {
 
-    public IntegerField(boolean optional, boolean repeated, String name) {
-        super(optional, repeated, name);
+    public IntegerField(FieldCardinality cardinality, String name) {
+        super(cardinality, name);
     }
 
     public FieldType getType() {
-        return FieldType.RECORD;
+        return FieldType.INTEGER;
     }
 }

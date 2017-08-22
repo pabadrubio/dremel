@@ -23,6 +23,11 @@ public class AtomicField<ValueType> {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return String.format("(%s, %d, %d)", value, repetitionLevel, definitionLevel);
+    }
+
     private int definitionLevel;
     private int repetitionLevel;
     private ValueType value;
