@@ -3,6 +3,10 @@
  */
 package org.pabad.dremel.parsing.data.internal;
 
+import org.pabad.dremel.storage.ColumnKey;
+
+import java.util.Arrays;
+
 public class AtomicField<ValueType> {
 
     public AtomicField(ValueType value, int repetitionLevel, int definitionLevel) {
@@ -31,5 +35,28 @@ public class AtomicField<ValueType> {
     private int definitionLevel;
     private int repetitionLevel;
     private ValueType value;
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object)
+            return true;
+        if (object == null)
+            return false;
+        if (getClass() != object.getClass())
+            return false;
+        AtomicField<ValueType> other = (AtomicField<ValueType>) object;
+        return (value != null ? value.equals(other.value) : other.value == null) &&
+                definitionLevel == other.definitionLevel &&
+                repetitionLevel == other.repetitionLevel;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + value.hashCode();
+        result = 31 * result + repetitionLevel;
+        result = 31 * result + definitionLevel;
+        return result;
+    }
 
 }
