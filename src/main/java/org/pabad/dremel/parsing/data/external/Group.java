@@ -6,14 +6,14 @@ package org.pabad.dremel.parsing.data.external;
 /**
  * A record decoded by the record decoder
  */
-public class DecodedRecord implements Field {
+public class Group implements Field {
 
-    public DecodedRecord(String name, RecordDecoder decoder) {
+    public Group(String name, RecordDecoder decoder) {
         this.name = name;
         this.decoder = decoder;
     }
 
-    public boolean isRecord() {
+    public boolean isGroup() {
         return true;
     }
 

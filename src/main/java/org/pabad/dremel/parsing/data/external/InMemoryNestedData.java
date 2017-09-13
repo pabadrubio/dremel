@@ -19,9 +19,9 @@ public class InMemoryNestedData implements RecordDecoder {
         FieldData fieldData = fieldValues.get(index);
         Field field;
         if (fieldData.value instanceof InMemoryNestedData)
-            field = new DecodedRecord(fieldData.name, (InMemoryNestedData)fieldData.value);
+            field = new Group(fieldData.name, (InMemoryNestedData)fieldData.value);
         else
-            field = new ValueField(fieldData.name, fieldData.value);
+            field = new AtomicField(fieldData.name, fieldData.value);
         index++;
         return field;
     }
@@ -52,14 +52,14 @@ public class InMemoryNestedData implements RecordDecoder {
             Field field = getNextField();
             builder.append(tabulatorLevel);
             builder.append(field.getName());
-            if (field.isRecord()) {
+            if (field.isGroup()) {
                 builder.append(newLine);
-                InMemoryNestedData decoder = (InMemoryNestedData) ((DecodedRecord)field).getRecordDecoder();
+                InMemoryNestedData decoder = (InMemoryNestedData) ((Group)field).getRecordDecoder();
                 decoder.buildString(tabulator, newLine, tabulatorLevel + tabulator, builder);
             }
             else {
                 builder.append(": ");
-                ValueField valueField = (ValueField)field;
+                AtomicField valueField = (AtomicField)field;
                 builder.append(valueField.getValue().toString());
                 builder.append(newLine);
             }
@@ -83,7 +83,7 @@ public class InMemoryNestedData implements RecordDecoder {
             return this;
         }
 
-        public InMemoryNestedData.Builder addRecordField(String name, InMemoryNestedData value) {
+        public InMemoryNestedData.Builder addGroup(String name, InMemoryNestedData value) {
             fieldValues.add(new InMemoryNestedData.FieldData(name, value));
             return this;
         }

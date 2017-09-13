@@ -8,13 +8,13 @@ package org.pabad.dremel.parsing.schema;
  */
 public class Schema {
 
-    public Schema(RecordField rootField) {
+    public Schema(Group rootField) {
         this.rootField = rootField;
     }
 
-    public RecordField getRootField() {
+    public Group getRootField() {
         return rootField;
     }
 
-    private RecordField rootField;
+    private Group rootField;
 }

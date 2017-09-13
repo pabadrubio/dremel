@@ -6,14 +6,14 @@ package org.pabad.dremel.parsing.data.external;
 /**
  * A field in a record with an associated value
  */
-public class ValueField implements Field {
+public class AtomicField implements Field {
 
-    public ValueField(String name, Object value) {
+    public AtomicField(String name, Object value) {
         this.name = name;
         this.value = value;
     }
 
-    public boolean isRecord() {
+    public boolean isGroup() {
         return false;
     }
 

@@ -3,11 +3,10 @@
  */
 package org.pabad.dremel.parsing.stripping;
 
-import org.pabad.dremel.parsing.data.external.DecodedRecord;
 import org.pabad.dremel.parsing.schema.Field;
-import org.pabad.dremel.parsing.data.external.ValueField;
+import org.pabad.dremel.parsing.data.external.AtomicField;
 import org.pabad.dremel.parsing.schema.FieldType;
-import org.pabad.dremel.parsing.schema.RecordField;
+import org.pabad.dremel.parsing.schema.Group;
 import org.pabad.dremel.parsing.schema.Schema;
 import org.pabad.dremel.parsing.data.external.RecordDecoder;
 import org.pabad.dremel.storage.ColumnarStoreSchemaSetter;
@@ -18,12 +17,6 @@ import java.util.Set;
 
 public class RecordStripper {
 
-    /**
-     * Implements the column strip algorithm
-     * @param schema
-     * @param decoder
-     * @param writer
-     */
     public void stripRecords(
             Schema schema,
             RecordDecoder decoder,
@@ -42,7 +35,7 @@ public class RecordStripper {
         boolean isAtomic = field.getType() != FieldType.RECORD;
         FieldWriter fieldWriter = new FieldWriter(field, parent, storeSchemaSetter, storeWriter);
         if (!isAtomic) {
-            RecordField recordField = (RecordField) field;
+            Group recordField = (Group) field;
             Field[] subFields = recordField.getSubFields();
             for (Field f : subFields) {
                 FieldWriter subFieldWriter = createFieldWriter(f, fieldWriter, storeSchemaSetter, storeWriter);
@@ -71,10 +64,10 @@ public class RecordStripper {
                 chDefinitionLevel += 1;
 
             if (chWriter.isAtomicField()) {
-                ValueField valueField = (ValueField)field;
+                AtomicField valueField = (AtomicField)field;
                 chWriter.write(valueField, chRepetitionLevel, chDefinitionLevel);
             } else {
-                DecodedRecord rField = (DecodedRecord)field;
+                org.pabad.dremel.parsing.data.external.Group rField = (org.pabad.dremel.parsing.data.external.Group)field;
                 dissectRecord(rField.getRecordDecoder(), chWriter, chRepetitionLevel, chDefinitionLevel);
             }
         }

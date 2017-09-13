@@ -3,9 +3,9 @@
  */
 package org.pabad.dremel.parsing.schema;
 
-public class RecordField extends BaseField {
+public class Group extends AtomicField {
 
-    public RecordField(FieldCardinality cardinality, String name, Field[] subFields) {
+    public Group(FieldCardinality cardinality, String name, Field[] subFields) {
         super(cardinality, name);
         this.subFields = subFields;
     }

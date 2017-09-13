@@ -3,10 +3,6 @@
  */
 package org.pabad.dremel.parsing.data.internal;
 
-import org.pabad.dremel.storage.ColumnKey;
-
-import java.util.Arrays;
-
 public class AtomicField<ValueType> {
 
     public AtomicField(ValueType value, int repetitionLevel, int definitionLevel) {

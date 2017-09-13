@@ -3,7 +3,7 @@
  */
 package org.pabad.dremel.parsing.stripping;
 
-import org.pabad.dremel.parsing.data.external.ValueField;
+import org.pabad.dremel.parsing.data.external.AtomicField;
 import org.pabad.dremel.parsing.schema.Field;
 import org.pabad.dremel.parsing.schema.FieldType;
 import org.pabad.dremel.storage.ColumnKey;
@@ -58,7 +58,7 @@ public class FieldWriter {
         return childs.get(fieldId);
     }
 
-    public void write(ValueField value, int chRepetitionLevel, int definitionLevel) {
+    public void write(AtomicField value, int chRepetitionLevel, int definitionLevel) {
         flush(false);
         writer.writeValue(value, chRepetitionLevel, definitionLevel);
     }
@@ -126,7 +126,7 @@ public class FieldWriter {
 
     private interface Writer {
         void writeNull(int repetitionLevel, int definitionLevel);
-        void writeValue(ValueField value, int repetitionLevel, int definitionLevel);
+        void writeValue(AtomicField value, int repetitionLevel, int definitionLevel);
     }
 
     private Writer getIntegerWriter(final ColumnarStoreWriter columnStoreWriter, final ColumnKey columnKey) {
@@ -139,7 +139,7 @@ public class FieldWriter {
                 intWriter.write(null, repetitionLevel, definitionLevel);
             }
 
-            public void writeValue(ValueField value, int repetitionLevel, int definitionLevel)
+            public void writeValue(AtomicField value, int repetitionLevel, int definitionLevel)
             {
                 Integer integerValue = value.getValue();
                 intWriter.write(integerValue, repetitionLevel, definitionLevel);
@@ -157,7 +157,7 @@ public class FieldWriter {
                 stringWriter.write(null, repetitionLevel, definitionLevel);
             }
 
-            public void writeValue(ValueField value, int repetitionLevel, int definitionLevel)
+            public void writeValue(AtomicField value, int repetitionLevel, int definitionLevel)
             {
                 String stringValue = value.getValue();
                 stringWriter.write(stringValue, repetitionLevel, definitionLevel);

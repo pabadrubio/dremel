@@ -21,7 +21,6 @@ public class RecordStripperTest {
 
     @Test
     public void PaperDataStripping() {
-
         InMemoryNestedData paperDataDecoder = DremelPaperDataProvider.getDecoder();
         Schema paperSchema = DremelPaperDataProvider.getSchema();
 

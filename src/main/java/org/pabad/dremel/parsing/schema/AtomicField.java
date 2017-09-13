@@ -6,9 +6,9 @@ package org.pabad.dremel.parsing.schema;
 /**
  * A field which contains data
  */
-public abstract class BaseField implements Field {
+public abstract class AtomicField implements Field {
 
-    public BaseField(FieldCardinality cardinality, String name) {
+    public AtomicField(FieldCardinality cardinality, String name) {
         this.cardinality = cardinality;
         this.name = name;
     }
